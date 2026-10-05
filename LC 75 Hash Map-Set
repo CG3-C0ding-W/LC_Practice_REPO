@@ -1,0 +1,49 @@
+'''
+Mission 4 Summary: Hash Map / Set
+
+'''
+
+# Two Sum (LC 1):
+def two_sum(nums, target):
+    seen = {}                     # number -> index
+    for i in range(len(nums)):
+        x = nums[i]
+        need = target - x               # 1: the partner value
+        if (need in seen):                   # 2: have we passed it?
+            return [seen[need], i]           # 3: both indexes
+        seen[x] = i                      # 4: store x
+    return []
+
+#LC 2215, Find the Difference of Two Arrays: 
+#   - Given nums1 and nums2
+#   - return [answer1, answer2], 
+#       + where answer1 is the distinct numbers in nums1 not in nums2
+#       + Where answer2 is the distinct numbers in nums2 not in nums1
+#       + Either list may be in any order.
+# nums1 = [5, 1, 5, 8], nums2 = [1, 9, 9] → [[5, 8], [9]]
+def find_difference(nums1, nums2):
+    set1 = set(nums1)                 # 1
+    set2 = set(nums2)               # 2
+
+    only1 = []
+    for x in set1:
+        if x not in set2:                 # 3
+            only1.append(x)
+
+    only2 = []
+    for x in set2:
+        if x not in set1:                 # 4
+            only2.append(x)
+
+    return [only1, only2]
+
+# LC 1207, Unique Number of Occurrences: 
+#   - Given an array arr, 
+#   - return True if the number of times each value appears is unique 
+#       + (no two values appear the same number of times)
+#   - otherwise False.
+def unique_occurrences(arr):
+    counts = {}
+    for x in arr:
+        counts[x] = counts.get(x, 0) + 1          # 1: add one to x's count
+    return len(set(counts.values())) == len(counts)            # 2: compare set size to number of counts

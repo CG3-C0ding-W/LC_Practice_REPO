@@ -47,3 +47,52 @@ def unique_occurrences(arr):
     for x in arr:
         counts[x] = counts.get(x, 0) + 1          # 1: add one to x's count
     return len(set(counts.values())) == len(counts)            # 2: compare set size to number of counts
+
+# LC 1657: Determine if Two Strings Are Close
+# Two strings are close if you can turn one into the other using these operations, as many times as you like:
+#   - Operation 1: Swap any two existing characters.
+#       + EX. "abcde" → "aecdb" (swapped the b and the e)
+#   - Operation 2: Pick two characters that both already exist in the string, and swap every occurrence of one with every occurrence of the other.
+#       + EX. "aacabb" → "bbcbaa" (all as became bs, all bs became as)
+#   Given word1 and word2, return True if they are close, otherwise False
+# Input: "abc"	"bca"	| Expected Output: True
+# Input: "a"	"aa"	| Expected Output: False
+# Input: "cabbba"	"abbccc" | Expected Output:	True
+def close_strings(word1, word2):
+    counts1 = {}
+    for c in word1:
+        counts1[c] = counts1.get(c, 0) + 1
+    counts2 = {}
+    for c in word2:
+        counts2[c] = counts2.get(c, 0) + 1
+    if set(counts1) != set(counts2):
+        return False
+    return sorted(counts1.values()) == sorted(counts2.values())
+
+# LC 2352: Equal Row and Column Pairs (last problem before the Mission 4 quiz)
+# Given an n x n grid
+# return the number of pairs (r, c) where row r and column c are equal: 
+#   - same elements, in the same order.
+# Example 1:
+# grid = [[3, 2, 1],
+#         [1, 7, 6],
+#         [2, 7, 7]]
+# Output: 1      (row 2 = col 1 = [2, 7, 7])
+# 
+# Example 2:
+# grid = [[3, 1, 2, 2],
+#         [1, 4, 4, 5],
+#         [2, 4, 2, 2],
+#         [2, 4, 2, 2]]
+# Output: 3      (row 0 = col 0; rows 2 AND 3 both = col 2)
+def equal_pairs(grid):
+    n = len(grid)
+    counts = {}
+    for row in grid:
+        key = tuple(row)
+        counts[key] = counts.get(key, 0) + 1     # write: +1
+    total = 0
+    for c in range(n):
+        col = tuple(grid[r][c] for r in range(n))
+        total += counts.get(col, 0)              # read: no +1
+    return total

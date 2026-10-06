@@ -1,0 +1,64 @@
+
+
+# LC 2390: Removing Stars From a String. You're given a string s of lowercase letters and *. 
+# Each * removes itself and the closest non-star character to its left. 
+# Return the string after all stars are processed. 
+#   - (Every * is guaranteed to have a letter to remove.)
+def remove_stars(s):
+    stack = []
+    for ch in s:
+        if ch == "*":
+            stack.pop()     # 1. backspace
+        else:
+            stack.append(ch)     # 2. type ch
+    return "".join(stack)    # glue the list back into a string
+
+# # LC 735: Asteroid Collision
+# You're given a list of integers representing asteroids in a row.
+# The size is the absolute value; the sign is the direction: positive moves right →, negative moves left ←.
+# All move at the same speed. When two meet, the smaller one explodes; if they're the same size, both explode.
+# Two asteroids moving the same direction never meet. And a left-mover on the left with a right-mover on the right ([-5, 10]) drift apart, so they never meet either.
+# asteroids 	Output
+# [5, 10, -5]	[5, 10] (−5 hits 10 and explodes)
+# [8, -8]	    [] (equal, both explode)
+def asteroid_collision(asteroids):
+    stack = []
+    for a in asteroids:
+        alive = True
+        while alive and a < 0 and stack and stack[-1] > 0:
+            if stack[-1] < -a:
+                stack.pop() # 1. top is smaller: top explodes, a keeps going
+            elif stack[-1] == -a:
+                stack.pop()
+                alive = False          # 2. same size: both explode
+            else:
+                alive = False          # 3. top is bigger: a explodes
+        if alive:
+            stack.append(a)
+    return stack
+
+# LC 394: Decode String
+# 
+# An encoded string uses the rule k[text], meaning repeat text exactly k times. Brackets can be nested. k is always a positive integer, and the input is always valid.
+# 
+#    Input	          Output
+# "3[a]2[bc]"	    "aaabcbc"
+# "3[a2[c]]"	    "accaccacc"
+# "2[abc]3[cd]ef"	"abcabccdcdcdef"
+def decode_string(s):
+    stack = []
+    cur = ""
+    num = 0
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == "[":
+            stack.append((cur, num))   # pause this level
+            cur = ""
+            num = 0
+        elif ch == "]":
+            prev, k = stack.pop()      # resume the level we paused
+            cur = prev + cur * k
+        else:
+            cur += ch
+    return cur

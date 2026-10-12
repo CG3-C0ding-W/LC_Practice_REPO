@@ -9,6 +9,7 @@ Concept:
   Recursion. The function calls itself on each child, and Python pauses the
   current call until the child returns (the call stack, same pause/resume
   idea as the stack in Decode String).
+  Skeleton: base case for None, one call per child, one combine line.
 
       def dfs(node):
           if node is None:           # base case
@@ -17,17 +18,32 @@ Concept:
           right = dfs(node.right)    # visit the right side
           return ...                 # combine
 
+How it works:
+  - Answers flow UP: catch each child's return (left = dfs(node.left)),
+    then combine. Max Depth: max(L, R) + 1, None → 0.
+    Count Good Nodes: good + left + right, None → 0.
+  - Information flows DOWN as an argument: Count Good Nodes passes
+    m = max value above; each node hands down max(node.val, m).
+    Good means node.val >= m (a tie counts; the root ties with itself).
+  - LCA: each call reports ONE thing, a node or None. If the node is
+    p or q, return it. If both sides report something, this node is the
+    LCA. Otherwise pass up whichever side found something.
+  - A recursive call passes every argument: copy the def line and change
+    only the one that moves.
+When to use it:
+  - A node needs facts about the PATH ABOVE it (depth from root, max so
+    far, running path sum) → pass them DOWN as arguments.
+  - A node needs facts about the SUBTREE BELOW it (height, counts, did
+    I find p or q) → RETURN them UP and combine.
+  - Test: change the nodes above, then change the nodes below. Whichever
+    one changes the answer is the direction it travels.
+
 Problems:
   LC 104  Maximum Depth             answers flow UP: each node returns a number to its parent
   LC 1448 Count Good Nodes          information flows DOWN: pass the max so far as an argument
   LC 236  Lowest Common Ancestor    both: children report up, the node combines the reports
 
-Likely hot spots:
-  - node vs. .val (your where-vs-what error): compare node.val, return node
-  - which variable holds what: catch the child's answer (left = dfs(...))
-    instead of calling and dropping it
-  - comparison order: "good" means node.val >= max_so_far (build it from the comment)
-  - off by one: what None returns (0, not 1) and where the +1 goes
+
 
 Then: pattern statement, quiz card, Mission 8 summary as a Python comment block.
 '''

@@ -1,25 +1,25 @@
 '''
 Mission 1 Summary: Two Pointers
 
-Problem: Checking every pair is O(n²).
-
-Concept: Two pointers that each comparison moves, so every step eliminates something for good. One pass, O(n).
+Problem: 
+    - Checking every pair is O(n²).
+    
+Concept: 
+    - Two pointers that each comparison moves, so every step eliminates something for good. One pass, O(n).
 
 Two flavors:
+    - Opposite ends (pair sum, k-sum, container)
+      L →              ← R
+      a comparison proves one end can't help → drop it
 
-Opposite ends (pair sum, k-sum, container)
- L →              ← R
- a comparison proves one end can't help → drop it
-
-Same direction (subsequence, move zeroes)
- i →   (in s)
- j →   (in t)
- pointers only advance, never reset
+   - Same direction (subsequence, move zeroes)
+     i →   (in s)
+     j →   (in t)
+     pointers only advance, never reset
 
 When to use it:
-
-Pairs in a sorted (or sortable) array, where a comparison says which end is useless → opposite ends.
-Walking two sequences, or reading and writing in one array, in order → same direction.
+    - Pairs in a sorted (or sortable) array, where a comparison says which end is useless → opposite ends.
+    - Walking two sequences, or reading and writing in one array, in order → same direction.
 '''
 
 # Container with max_area

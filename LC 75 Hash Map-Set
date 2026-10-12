@@ -1,9 +1,12 @@
 '''
 Mission 4 Summary: Hash Map / Set
 
-Problem: Two pointers needed sorted order to answer "have I seen X?" quickly. Unsorted data needed something else.
+Problem: 
+    - Two pointers needed sorted order to answer "have I seen X?" quickly. 
+      Unsorted data needed something else.
 
-Concept: A hash map / set remembers everything you've passed, so "where / was it there / how many" is one step in any order.
+Concept: 
+    - A hash map / set remembers everything you've passed, so "where / was it there / how many" is one step in any order.
 
 How it works:
 
@@ -14,7 +17,9 @@ Question	Structure	Example
 
 The key is whatever you'll search with: a number, a word, or a whole row as a tuple.
 
-When to use it: you need to ask "seen / where / how many" about earlier items in one step, and sorting won't help (or would lose the indexes).
+When to use it: 
+    - you need to ask "seen / where / how many" about earlier items in one step, 
+      and sorting won't help (or would lose the indexes).
 
 '''
 

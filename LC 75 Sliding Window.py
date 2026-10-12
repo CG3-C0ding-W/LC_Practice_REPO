@@ -1,22 +1,24 @@
 '''
 Mission 2 Summary: Sliding Window
 
-Problem: Measuring every contiguous chunk from scratch is O(n·k).
+Problem: 
+    - Measuring every contiguous chunk from scratch is O(n·k).
 
-Concept: Keep a running tally of one window, and update only the edges as it moves. O(n).
+Concept: 
+    - Keep a running tally of one window, and update only the edges as it moves. O(n).
 
 Two flavors:
 
-Fixed size (max average, max vowels)
-  for i in range(k, n):
-      window += add(nums[i]) - remove(nums[i - k])
+    - Fixed size (max average, max vowels)
+        for i in range(k, n):
+            window += add(nums[i]) - remove(nums[i - k])
 
-Variable size (max consecutive ones, delete one element)
-  for right in range(n):
-      add nums[right]
-      while window is illegal:
-          remove nums[left]; left += 1
-      record right - left + 1
+    - Variable size (max consecutive ones, delete one element)
+        for right in range(n):
+            add nums[right]
+            while window is illegal:
+                remove nums[left]; left += 1
+            record right - left + 1
 
 When to use it: 
     - contiguous / consecutive / subarray / substring. A given length → fixed window. 

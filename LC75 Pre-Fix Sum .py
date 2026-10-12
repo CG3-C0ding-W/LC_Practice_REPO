@@ -1,19 +1,22 @@
 '''
 Mission 3 Summary: Prefix Sum
 
-Problem: Range-sum questions that jump around can't use a sliding window, and re-adding each range is O(n) per question.
+Problem: 
+    - Range-sum questions that jump around can't use a sliding window, 
+    - and re-adding each range is O(n) per question.
 
-Concept: Build a running total once (the odometer). Then any range is one subtraction.
-
- prefix = [0, 3, 4, 8, 9, 14, 23]      prefix[i] = reading at the START of day i
- sum of idx l..r = prefix[r + 1] − prefix[l]
+Concept: 
+    - Build a running total once (the odometer). Then any range is one subtraction.
+    prefix = [0, 3, 4, 8, 9, 14, 23]      prefix[i] = reading at the START of day i
+    sum of idx l..r = prefix[r + 1] − prefix[l]
 
 Two ways you used it:
+    - Build it: Highest Altitude: altitude = altitude + g, track the max.
+    - Split a total: Pivot Index: right = total − left − nums[i], with left as a running total. Check first, then add.
 
-Build it: Highest Altitude: altitude = altitude + g, track the max.
-Split a total: Pivot Index: right = total − left − nums[i], with left as a running total. Check first, then add.
-
-When to use it: repeated sums over ranges, or anything comparing "everything before i" with "everything after i."
+When to use it: 
+    - repeated sums over ranges, 
+    - or anything comparing "everything before i" with "everything after i."
 '''
 
 # LC 1732: Find the Highest Altitude

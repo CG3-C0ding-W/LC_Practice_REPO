@@ -1,4 +1,22 @@
-
+# Mission 5 Summary
+# Problem: 
+#   - Each new item has to cancel, match, or combine with the 
+#     most recent pending item (stars, asteroids, brackets). 
+#   - Then: for each item, find the nearest warmer or bigger 
+#     item without rescanning, which would be O(n²).
+# 
+# Concept: 
+#   - A stack (the backspace key: every add and delete at the same end). 
+#   - A monotonic stack is a stack kept sorted: the new item pops everything it beats, then is pushed.
+# 
+# How it works: 
+#   - The stack holds items still waiting for an answer. When a new item beats the top, 
+#     the top gets its answer (Daily Temperatures: answer[j] = i - j) or hands over its 
+#     receipt (Stock Span: span += s). A while loop# , because one item can beat several.
+# 
+# When to use it: 
+#   - “For each item, the nearest item to the left or right that’s greater (or smaller)” → monotonic stack. 
+#   - “Each item interacts with the most recent pending one” → plain stack.
 
 # LC 2390: Removing Stars From a String. You're given a string s of lowercase letters and *. 
 # Each * removes itself and the closest non-star character to its left. 
@@ -62,3 +80,42 @@ def decode_string(s):
         else:
             cur += ch
     return cur
+
+# LC 379: Daily Temperatures
+# Given a list temps of daily temperatures, return a list answer where answer[i] is how many days you wait after day i to get a warmer day. 
+# If no warmer day ever comes, answer[i] = 0. 
+# Ex.
+# idx:    0   1   2   3   4   5   6   7
+# temps: 73  74  75  71  69  72  76  73
+# answer: 1   1   4   2   1   1   0   0
+
+def daily_temperatures(temps):
+    answer = [0] * len(temps)     # 0 = "never answered" (days 6, 7)
+    stack = []                    # INDEXES of days still waiting
+    for i in range(len(temps)):
+        while stack and temps[stack[-1]] < temps[i]:  # top check column
+            j = stack.pop()         # popped column: which day
+            answer[j] = i - j   # popped column: how long it waited
+        stack.append(i)                   # last column: today joins the waiting days
+    return answer
+
+# LC 901: Online Stock Span
+# Prices arrive one day at a time. For each new price, 
+# return its span: the number of consecutive days ending 
+# today (counting today) where the price was ≤ today’s price. 
+# Walk backward from today and stop at the first day with a higher price.
+# Ex. 
+# day:    0    1    2    3    4    5    6
+# price: 100   80   60   70   60   75   85
+# span:   1    1    1    2    1    ?    ?
+class StockSpanner:
+    def __init__(self):
+        self.stack = []                  # (price, span) pairs, prices decreasing
+
+    def next(self, price):
+        span = 1                         # today
+        while self.stack and self.stack[-1][0] <= price:
+            p, s = self.stack.pop()
+            span += s                    # absorb its receipt
+        self.stack.append((price, span))
+        return span

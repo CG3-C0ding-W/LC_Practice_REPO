@@ -1,0 +1,11 @@
+'''
+'''
+# LC 215 Kth Largest Element in an Array
+# Given nums and k, return the k-th largest value.
+# Example: nums = [3, 2, 1, 5, 6, 4], k = 2 → 5.
+heap = []
+for x in nums:
+    heapq.heappush(heap, x)        # hold the new one
+    if len(heap) > k:              # holding more than k
+        heapq.heappop(heap)        # kick out the smallest
+return heap[0]

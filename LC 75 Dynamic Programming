@@ -1,0 +1,64 @@
+# Mission 15 Summary
+# Problem:
+#   - Plain recursion for Tribonacci asks the same smaller questions over and
+#     over: trib(5) works out T(2) four times, and the repeats multiply as n
+#     grows (millions of calls by n = 30).
+#
+# Concept:
+#   - Dynamic programming: solve each small case ONCE, store it in dp[i],
+#     and build bigger answers from stored ones, smallest first.
+#   - Same idea as the prefix sum odometer (Mission 3): each entry is built
+#     from the ones before it.
+#   - Three things per position, tag each: i = where (a step, a house);
+#     cost[i] / nums[i] = that item's value; dp[i] = the BEST ANSWER so far.
+#
+# How it works:
+#   - Work a row with numbers, then swap numbers for names:
+#       row 5: 4 + 2 + 1 → dp[4] + dp[3] + dp[2] → dp[i-1] + dp[i-2] + dp[i-3]
+#   - Min Cost Stairs (LC 746): dp[i] = cheapest total to STAND ON step i.
+#     dp[0] = dp[1] = 0 (free starts).
+#     dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
+#     (get there + pay to leave; both pieces). The top is one past the last
+#     step: n + 1 slots, return dp[n].
+#   - House Robber (LC 198): dp[i] = most money from houses 0..i.
+#     dp[i] = max(dp[i-1],            skip house i
+#                 dp[i-2] + nums[i])  rob it: its neighbor i-1 left alone
+#     One slot per house: n slots, return dp[n - 1].
+#   - Copy the loop variable exactly: i, not I.
+#
+# When to use it:
+#   - The answer at position i comes from the answers at a few positions
+#     just before it, and plain recursion would repeat work → 1D DP.
+#   - Typical asks: the cheapest / the most / how many ways, along a line.
+#   - Count the ways → DP; list every way → backtracking (Mission 14).
+
+# LC 1137 N-th Tribonacci Number
+# T(0) = 0, T(1) = 1, T(2) = 1, and T(n) = T(n - 1) + T(n - 2) + T(n - 3)
+# for n >= 3. Given n, return T(n).
+# Example: n = 4 → 4    (0, 1, 1, 2, 4)
+# Example: n = 5 → 7
+
+def tribonacci(n):
+    if n == 0:
+        return 0
+    if n <= 2:
+        return 1
+    dp = [0] * (n + 1)                        # dp[i] = T(i)
+    dp[0], dp[1], dp[2] = 0, 1, 1             # the given rows
+    for i in range(3, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3]   # the three rows above
+    return dp[n]
+
+
+# LC 746 Min Cost Climbing Stairs
+# cost[i] is the price of stepping off step i; after paying, climb 1 or 2
+# steps. You may start on step 0 or step 1 for free. The top is just past
+# the last step (index n = len(cost)). Return the cheapest total to reach it.
+# Example: cost = [1, 5, 2, 7, 3] → 6
+# Example: cost = [1, 9, 1] → 2
+
+def min_cost_climbing_stairs(cost):
+    n = len(cost)
+    dp = [0] * (n + 1)                        # dp[i] = cheapest total to STAND ON step i
+                                              # dp[0] = dp[1] = 0: free starts
+    for i in

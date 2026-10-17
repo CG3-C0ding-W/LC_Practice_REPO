@@ -54,15 +54,12 @@ def is_subsequence(s, t):
 # Move Zeroes (LC 283)      
 # nums = [0, 1, 0, 3, 12]
 def move_zeroes(nums):
-    read, write = [0,0]
+    read, write = 0, 0
     while read != len(nums):
-        # compare, then move the right pointer(s)
-        if(nums[read] != 0):
+        if nums[read] != 0:                 # found a non-zero
             nums[write], nums[read] = nums[read], nums[write]
-            write += 1
-        else:
-            read += 1
-            write += 1
+            write += 1                      # write: only after writing one
+        read += 1                           # read: every step
     return nums
 
 def move_zeroes(nums):

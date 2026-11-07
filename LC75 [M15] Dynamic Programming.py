@@ -57,8 +57,10 @@ def tribonacci(n):
 # Example: cost = [1, 5, 2, 7, 3] → 6
 # Example: cost = [1, 9, 1] → 2
 
+'''
 def min_cost_climbing_stairs(cost):
     n = len(cost)
     dp = [0] * (n + 1)                        # dp[i] = cheapest total to STAND ON step i
                                               # dp[0] = dp[1] = 0: free starts
     for i in
+'''
